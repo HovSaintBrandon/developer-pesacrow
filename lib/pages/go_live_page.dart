@@ -71,7 +71,7 @@ class _GoLivePageState extends State<GoLivePage> {
         name: _nameController.text,
         email: _emailController.text,
         platformPhone: _platformPhoneController.text,
-        webhookUrl: _webhookController.text.isEmpty ? null : _webhookController.text,
+        webhookUrl: _webhookController.text,
       );
       
       if (res['success']) {
@@ -225,7 +225,8 @@ class _GoLivePageState extends State<GoLivePage> {
           TextFormField(
             controller: _webhookController,
             style: const TextStyle(color: Colors.white),
-            decoration: _inputDecoration('Webhook URL (Optional)', 'https://api.myapp.com/webhook', Icons.webhook),
+            decoration: _inputDecoration('Web URL', 'https://api.myapp.com/webhook', Icons.webhook),
+            validator: (v) => v!.isEmpty ? 'Web URL is required' : null,
           ),
           const SizedBox(height: 32),
           SizedBox(

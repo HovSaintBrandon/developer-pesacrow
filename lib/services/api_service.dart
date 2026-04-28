@@ -42,7 +42,7 @@ class ApiService {
     required String name,
     required String email,
     required String platformPhone,
-    String? webhookUrl,
+    required String webhookUrl,
   }) async {
     if (_token == null) throw Exception('Not authenticated');
 
@@ -50,10 +50,8 @@ class ApiService {
       'name': name,
       'email': email,
       'platformPhone': platformPhone,
+      'webhookUrl': webhookUrl,
     };
-    if (webhookUrl != null && webhookUrl.isNotEmpty) {
-      body['webhookUrl'] = webhookUrl;
-    }
 
     final response = await http.post(
       Uri.parse('$baseUrl/platforms/request-go-live'),
