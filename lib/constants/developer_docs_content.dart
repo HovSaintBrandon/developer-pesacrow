@@ -126,6 +126,7 @@ Transitioning from development to a live, money-moving application requires coor
 - [ ] **Signature Verification Active**: Ensure the code that verifies the `x-pesacrow-signature` on incoming webhooks is enabled and strictly enforced.
 - [ ] **Error Handling**: Verify that your application gracefully handles `429 Too Many Requests` (Rate Limits) and network timeouts.
 - [ ] **End-to-End Live Test**: Perform a live transaction of KSh 100 with a real phone to verify the end-to-end flow, from payment to final payout release.
+- [ ] **Request Production API Key**: Once testing is successful, email **support@pesacrow.top** with your **Platform Number** and **Platform Email** to receive your live production credentials.
 ''',
   },
   'SDK & Tools': {

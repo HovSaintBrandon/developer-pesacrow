@@ -69,7 +69,7 @@ if (order.paymentStatus === 'paid') {
 *   **PesaCrow Maintenance**: We aim for zero-downtime deployments. Major upgrades are performed on Sundays between 02:00 AM and 04:00 AM (EAT). We will notify all registered developers via email 7 days in advance if downtime is expected.
 *   **Safaricom Maintenance**: Safaricom frequently performs maintenance on weekends late at night. PesaCrow has no control over these windows, but we will reflect them on `status.pesacrow.top` as soon as Safaricom announces them.
 
-*For critical incidents affecting your ability to process payments, please check the status page first. If all systems show as operational but you are experiencing total failure, escalate immediately to emergency-dev@pesacrow.top.*
+*For critical incidents affecting your ability to process payments, please check the status page first. If all systems show as operational but you are experiencing total failure, escalate immediately to support@pesacrow.top.*
 ''',
   }
 };
