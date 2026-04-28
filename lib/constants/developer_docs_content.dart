@@ -231,7 +231,7 @@ If building in **Flutter** or **React Native**, the JS SDK cannot be used.
 Accelerate your integration by importing our official Postman collection. It contains pre-configured requests for all Open Integration and Decentralized API endpoints.
 
 ### Download
-[Download] **[PesaCrow Open Integration Postman Collection](https://github.com/HovSaintBrandon/pesacrow-open-intergration-endpoints/releases/tag/user%2Fdev#:~:text=PesaCrow_Open_Integration_Collection.json)**
+[Download] **[PesaCrow Open Integration Postman Collection](https://github.com/user-attachments/files/27161248/PesaCrow_Open_Integration_Collection.json)**
 
 ### How to use:
 1.  Download the `.json` file from the link above.
