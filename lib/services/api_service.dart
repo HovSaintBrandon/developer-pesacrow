@@ -46,20 +46,38 @@ class ApiService {
   }) async {
     if (_token == null) throw Exception('Not authenticated');
 
+    final Map<String, dynamic> body = {
+      'name': name,
+      'email': email,
+      'platformPhone': platformPhone,
+    };
+    if (webhookUrl != null && webhookUrl.isNotEmpty) {
+      body['webhookUrl'] = webhookUrl;
+    }
+
     final response = await http.post(
       Uri.parse('$baseUrl/platforms/request-go-live'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $_token',
       },
-      body: jsonEncode({
-        'name': name,
-        'email': email,
-        'platformPhone': platformPhone,
-        'webhookUrl': webhookUrl,
-      }),
+      body: jsonEncode(body),
     );
     
-    return jsonDecode(response.body);
+    try {
+      final decoded = jsonDecode(response.body);
+      if (response.statusCode != 200 && response.statusCode != 201) {
+        return {
+          'success': false,
+          'message': decoded['message'] ?? 'Server error (${response.statusCode})',
+        };
+      }
+      return decoded;
+    } catch (e) {
+      return {
+        'success': false,
+        'message': 'Failed to parse server response',
+      };
+    }
   }
 }
