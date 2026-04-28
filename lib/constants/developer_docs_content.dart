@@ -44,6 +44,21 @@ You must never write your first lines of code using real money.
 *   **The Sandbox (`sandbox-api.escrow.pesacrow.top`)**: This is a safe testing environment. When you trigger an M-Pesa payment here, no prompt goes to your phone. Instead, you use our simulator to magically mark the transaction as "Success" or "Failed" to see how your website reacts.
 *   **Production (`api.escrow.pesacrow.top`)**: The live environment. Real money moves, real M-Pesa prompts appear, and real fees are charged. 
 
+### 🛑 Important: 403 Forbidden on Simulation
+If you attempt to call `POST /api/sandbox/simulate-payment` on the **Production API**, you will receive a `403 Forbidden` error.
+
+**The Reason**:
+The "Simulate Payment" tool is strictly for development. Allowing it in production would allow anyone to "fake" a payment and trigger real fund releases.
+
+**How to test in Production**:
+To test the flow in live production, you must perform a real M-Pesa transaction:
+1.  Create a small test deal (e.g., KSh 20).
+2.  Call `POST /api/payments/initiate-stk`.
+3.  Enter your M-Pesa PIN on your phone.
+4.  Wait for the webhook to update the status to `held`.
+
+*Note: If you are running a local testing server, ensure `NODE_ENV=development` is set in your `.env` for the simulator to function.*
+
 ## The 4-Step Technical Flow
 1.  **Create Deal**: Your server securely tells PesaCrow the item price and description. PesaCrow returns a unique `Transaction ID`.
 2.  **Initiate STK Push**: You send us the buyer's phone number. We trigger Safaricom to pop up the PIN prompt on their phone.
@@ -71,6 +86,29 @@ To integrate successfully, your tech team must implement the following:
 *   **Idempotency Keys**: Network drops happen. To prevent a buyer from being charged twice if your server retries a request, you must pass a unique `Idempotency-Key` header when creating deals.
 *   **Webhook Signatures**: To prevent hackers from faking payment confirmations, every webhook we send is cryptographically signed using your secret `API_SECRET`. Your server must verify this signature before marking an order as paid.
 *   **HTTPS**: All webhooks must be received on a secure `https://` endpoint.
+
+---
+
+## 🛠️ Postman & Troubleshooting
+
+### 1. The Authorization Header Conflict
+If you are testing via Postman, ensure you do not use the built-in "Basic Auth" or "Bearer Token" types in the **Authorization** tab.
+
+*   **The Issue**: Postman's "Basic Auth" generates a standard `Authorization` header. However, PesaCrow strictly expects your API key in a custom header called `x-api-key`.
+*   **The Fix**:
+    1.  Go to the **Authorization** tab in Postman.
+    2.  Change Auth Type to **No Auth**.
+    3.  Go to the **Headers** tab.
+    4.  Manually add a header: `x-api-key` with your valid key value.
+
+### 2. Environment Variables
+If you receive an `Invalid or inactive API key` error:
+*   Ensure the variable value matches exactly what was generated in your Admin Dashboard.
+*   Verify that your platform status is `isActive: true`.
+
+### 3. Implementation Note: Managed Platforms
+The `createOpenDeal` endpoint strictly requires a valid platform identity via the `x-api-key`. For a "Managed Platform" flow (where the platform initiates the escrow), this strict check ensures security and correct fee attribution.
+''',
 ''',
     'Going Live': '''
 # The "Going Live" Checklist
