@@ -319,5 +319,109 @@ If a buyer disputes an order, status becomes `disputed`. You must provide Proof 
 *   **Accepted Formats**: `.jpg`, `.jpeg`, `.png`, `.webp`, `.heic`
 *   **Max Size**: 10MB (Ensure high-resolution waybills are clearly legible).
 ''',
+  },
+  'API v0.1.0': {
+    'Open Integration': '''
+# 1. Open Integration (For Platforms)
+These endpoints are designed for shops, marketplaces, and apps to initiate and track escrow deals.
+
+### A. Create a Managed Deal
+Initiate a deal from your platform. You can provide an `externalId` to link it to your own database.
+
+- **Endpoint**: `POST /api/open/deals`
+- **Authentication**: `x-api-key` (Platform API Key)
+- **Payload**:
+```json
+{
+  "sellerPhone": "254701234567",
+  "amount": 1500,
+  "description": "Payment for Blue Suede Shoes",
+  "externalId": "ORDER-998"
+}
+```
+- **Response**:
+```json
+{
+  "transactionId": "ESC-KE-123456",
+  "externalId": "ORDER-998",
+  "totalBuyerPays": 1530,
+  "shareLink": "https://app.pesacrow.top/join/ESC-KE-123456",
+  "status": "pending_payment"
+}
+```
+
+### B. Public Deal Lookup
+Check the status of any deal without requiring user authentication.
+
+- **Endpoint**: `GET /api/open/deals/:transactionId`
+- **Response**: Returns anonymized deal data, status, and expiry.
+''',
+    'Decentralized UX': '''
+# 2. Decentralized User Experience (For Frontend Apps)
+These endpoints allow you to build a "Consumer Hub" where users manage their own deals.
+
+### A. Unified Deal History
+List all deals for the logged-in user, across **all** platforms they’ve interacted with.
+
+- **Endpoint**: `GET /api/user/deals`
+- **Authentication**: Bearer Token (JWT)
+- **Response**: List of deals with a `myRole` field (`buyer` or `seller`).
+
+### B. Action Discovery
+Dynamically determine what buttons to show a user for a specific deal.
+
+- **Endpoint**: `GET /api/deals/:transactionId/actions`
+- **Authentication**: Bearer Token (JWT)
+- **Response**:
+```json
+{
+  "status": "delivered",
+  "role": "buyer",
+  "availableActions": ["approve_funds", "raise_dispute", "cancel_deal", "upload_proof"]
+}
+```
+
+### C. Global Payout Preferences
+Users set their payout channel (M-Pesa, Pochi, Paybill) once. PesaCrow handles the routing automatically.
+
+- **Endpoint**: `POST /api/user/payout-preference`
+- **Authentication**: Bearer Token (JWT)
+- **Payload**:
+```json
+{
+  "preferredChannel": "pochi",
+  "payoutPhone": "254701234567"
+}
+```
+''',
+    'Webhooks & Best Practices': '''
+# 3. Webhook Integration
+Register a Webhook URL in your Developer Dashboard to receive real-time updates.
+
+### Deal Status Updated
+Triggered whenever a deal status changes (e.g., to `held` or `delivered`).
+
+**Payload**:
+```json
+{
+  "event": "deal.status_updated",
+  "data": {
+    "transactionId": "ESC-KE-123456",
+    "externalId": "ORDER-998",
+    "oldStatus": "pending_payment",
+    "newStatus": "held",
+    "amount": 1500,
+    "mpesaReceipt": "RBC12345XYZ"
+  }
+}
+```
+
+---
+
+# 4. Best Practices
+1.  **Use `externalId`**: Always pass your internal Order ID when creating a deal to avoid mapping headaches.
+2.  **Listen to Webhooks**: Rely on webhooks for order fulfillment rather than polling.
+3.  **Encourage Global Payouts**: Redirect users to PesaCrow to set their preferences; this reduces your liability and ensures they get paid where they want.
+'''
   }
 };
