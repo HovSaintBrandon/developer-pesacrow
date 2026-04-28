@@ -115,6 +115,18 @@ The `createOpenDeal` endpoint strictly requires a valid platform identity via th
 
 Transitioning from development to a live, money-moving application requires coordination between the business owner and the lead developer.
 
+## Developer Self-Service (User-Facing)
+You can now automate your production request using our self-service endpoint.
+
+*   **Endpoint**: `POST /api/platforms/request-go-live`
+*   **Workflow**: Authenticated users can submit their platform details (Name, Email, Phone, Webhook) directly to our team for review.
+*   **Validation**: Built-in validation ensures valid Kenyan phone numbers and HTTPS webhook URLs.
+*   **Duplicate Prevention**: Users are restricted from submitting multiple pending requests.
+
+Once submitted, our team will review your integration and provide your Production API Key upon approval.
+
+---
+
 ## Business Owner Checklist
 - [ ] **KYC & Registration**: Complete the PesaCrow merchant verification process (providing business registration details if applicable).
 - [ ] **Payout Configuration**: Verify that the primary merchant phone number registered with PesaCrow is correct. This is where your cleared funds will be deposited.

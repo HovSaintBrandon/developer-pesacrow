@@ -49,6 +49,15 @@ class _APIPageState extends State<APIPage> {
         title: const GradientText('PesaCrow Docs', fontSize: 22, fontWeight: FontWeight.bold),
         actions: [
           TextButton.icon(
+            onPressed: () => Navigator.pushNamed(context, '/go-live'),
+            icon: const Icon(Icons.rocket_launch, color: AppColors.brandGreen, size: 18),
+            label: const Text(
+              'Go Live',
+              style: TextStyle(color: AppColors.brandGreen, fontWeight: FontWeight.bold),
+            ),
+          ),
+          const SizedBox(width: 12),
+          TextButton.icon(
             onPressed: () => Navigator.pushNamed(context, '/system-status'),
             icon: const Icon(Icons.monitor_heart, color: AppColors.cyan, size: 18),
             label: const Text(

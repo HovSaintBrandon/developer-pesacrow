@@ -3,6 +3,7 @@ import 'package:flutter_web_plugins/url_strategy.dart';
 import 'theme/app_theme.dart';
 import 'pages/api_page.dart';
 import 'pages/system_status_page.dart';
+import 'pages/go_live_page.dart';
 import 'services/seo_service.dart';
 import 'utils/nav_observer.dart';
 
@@ -30,6 +31,7 @@ class PesaCrowApp extends StatelessWidget {
       routes: {
         '/': (context) => const APIPage(),
         '/system-status': (context) => const SystemStatusPage(),
+        '/go-live': (context) => const GoLivePage(),
       },
       navigatorObservers: [
         SeoNavObserver(),
