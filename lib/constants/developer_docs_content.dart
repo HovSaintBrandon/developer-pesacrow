@@ -109,7 +109,6 @@ If you receive an `Invalid or inactive API key` error:
 ### 3. Implementation Note: Managed Platforms
 The `createOpenDeal` endpoint strictly requires a valid platform identity via the `x-api-key`. For a "Managed Platform" flow (where the platform initiates the escrow), this strict check ensures security and correct fee attribution.
 ''',
-''',
     'Going Live': '''
 # The "Going Live" Checklist
 
@@ -232,7 +231,7 @@ If building in **Flutter** or **React Native**, the JS SDK cannot be used.
 Accelerate your integration by importing our official Postman collection. It contains pre-configured requests for all Open Integration and Decentralized API endpoints.
 
 ### Download
-🔗 **[PesaCrow Open Integration Postman Collection](https://github.com/HovSaintBrandon/pesacrow-open-intergration-endpoints/releases/tag/user%2Fdev#:~:text=PesaCrow_Open_Integration_Collection.json)**
+[Download] **[PesaCrow Open Integration Postman Collection](https://github.com/HovSaintBrandon/pesacrow-open-intergration-endpoints/releases/tag/user%2Fdev#:~:text=PesaCrow_Open_Integration_Collection.json)**
 
 ### How to use:
 1.  Download the `.json` file from the link above.
