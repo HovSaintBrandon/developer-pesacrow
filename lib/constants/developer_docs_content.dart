@@ -213,6 +213,20 @@ If building in **Flutter** or **React Native**, the JS SDK cannot be used.
 4.  Your app polls `GET /open/deals/{transactionId}` every 3 seconds to update the UI.
 5.  Your backend listens for webhooks to finalize the database state.
 ''',
+    'Postman Collection': '''
+# Postman Collection
+
+Accelerate your integration by importing our official Postman collection. It contains pre-configured requests for all Open Integration and Decentralized API endpoints.
+
+### Download
+🔗 **[PesaCrow Open Integration Postman Collection](https://github.com/HovSaintBrandon/pesacrow-open-intergration-endpoints/releases/tag/user%2Fdev#:~:text=PesaCrow_Open_Integration_Collection.json)**
+
+### How to use:
+1.  Download the `.json` file from the link above.
+2.  Open Postman and click **Import**.
+3.  Drag and drop the downloaded file.
+4.  Configure your **Environment Variables** (e.g., `apiKey`, `baseUrl`) to match your sandbox or production credentials.
+''',
   },
   'API Reference': {
     'Create Deal': '''
