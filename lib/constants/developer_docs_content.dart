@@ -127,7 +127,7 @@ Once submitted, our team will review your integration and provide your Productio
 ---
 
 ## Business Owner Checklist
-- [ ] **KYC & Registration**: Complete the PesaCrow merchant verification process (providing business registration details if applicable).
+- [ ] **KYC Verification**: Complete the mandatory KRA-integrated verification (Manual or OCR).
 - [ ] **Payout Configuration**: Verify that the primary merchant phone number registered with PesaCrow is correct. This is where your cleared funds will be deposited.
 - [ ] **Customer Support Plan**: Ensure your website clearly explains the Escrow process so buyers know why they are paying PesaCrow instead of paying you directly.
 
