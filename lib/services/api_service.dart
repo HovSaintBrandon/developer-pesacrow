@@ -56,6 +56,39 @@ class ApiService {
     return data;
   }
 
+  // New KYC OTP Endpoints
+  Future<Map<String, dynamic>> sendKycOtp({required String type, required String value}) async {
+    final endpoint = '$baseUrl/platforms/kyc/send-otp';
+    final body = {'type': type, 'value': value};
+    final response = await http.post(
+      Uri.parse(endpoint),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(body),
+    );
+    _log('POST', endpoint, body, response);
+    return jsonDecode(response.body);
+  }
+
+  Future<Map<String, dynamic>> verifyKycOtp({required String identifier, required String otp}) async {
+    final endpoint = '$baseUrl/platforms/kyc/verify-otp';
+    final body = {'identifier': identifier, 'otp': otp};
+    final response = await http.post(
+      Uri.parse(endpoint),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(body),
+    );
+    _log('POST', endpoint, body, response);
+    
+    final data = jsonDecode(response.body);
+    if (data['success'] == true) {
+      // If the response contains a token, store it
+      if (data['data'] != null && data['data']['token'] != null) {
+        _token = data['data']['token'];
+      }
+    }
+    return data;
+  }
+
   Future<Map<String, dynamic>> requestGoLive({
     required String name,
     required String email,

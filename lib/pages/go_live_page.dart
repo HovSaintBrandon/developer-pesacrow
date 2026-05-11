@@ -29,9 +29,10 @@ class _GoLivePageState extends State<GoLivePage> {
   GoLiveStep _currentStep = GoLiveStep.auth;
   bool _isLoading = false;
   bool _otpSent = false;
+  String _authType = 'phone'; // 'phone' or 'email'
 
   // Controllers
-  final _phoneController = TextEditingController();
+  final _identifierController = TextEditingController();
   final _otpController = TextEditingController();
   
   // KYC Manual Controllers
@@ -60,9 +61,16 @@ class _GoLivePageState extends State<GoLivePage> {
   // --- Auth Actions ---
 
   void _handleSendOtp() async {
+    if (_identifierController.text.isEmpty) {
+      _showError('${_authType == 'phone' ? 'Phone number' : 'Email'} is required');
+      return;
+    }
     setState(() => _isLoading = true);
     try {
-      final res = await _api.sendOtp(_phoneController.text);
+      final res = await _api.sendKycOtp(
+        type: _authType,
+        value: _identifierController.text,
+      );
       if (res['success']) {
         setState(() => _otpSent = true);
       } else {
@@ -76,9 +84,16 @@ class _GoLivePageState extends State<GoLivePage> {
   }
 
   void _handleVerifyOtp() async {
+    if (_otpController.text.isEmpty) {
+      _showError('OTP is required');
+      return;
+    }
     setState(() => _isLoading = true);
     try {
-      final res = await _api.verifyOtp(_phoneController.text, _otpController.text);
+      final res = await _api.verifyKycOtp(
+        identifier: _identifierController.text,
+        otp: _otpController.text,
+      );
       if (res['success']) {
         setState(() => _currentStep = GoLiveStep.kycType);
       } else {
@@ -293,16 +308,29 @@ class _GoLivePageState extends State<GoLivePage> {
         const GradientText('Step 1: Identity', fontSize: 28, fontWeight: FontWeight.bold),
         const SizedBox(height: 8),
         const Text(
-          'Verify your phone number to start the KYC process.',
+          'Verify your identity to start the KYC process.',
           style: TextStyle(color: AppColors.textSecondary, fontSize: 16),
         ),
-        const SizedBox(height: 32),
+        const SizedBox(height: 24),
+        if (!_otpSent)
+          Row(
+            children: [
+              _authTypeButton('phone', Icons.phone_android, 'Phone'),
+              const SizedBox(width: 12),
+              _authTypeButton('email', Icons.email_outlined, 'Email'),
+            ],
+          ),
+        const SizedBox(height: 24),
         TextField(
-          controller: _phoneController,
+          controller: _identifierController,
           enabled: !_otpSent,
           style: const TextStyle(color: Colors.white),
-          decoration: _inputDecoration('Phone Number', '2547XXXXXXXX', Icons.phone),
-          keyboardType: TextInputType.phone,
+          decoration: _inputDecoration(
+            _authType == 'phone' ? 'Phone Number' : 'Email Address',
+            _authType == 'phone' ? '2547XXXXXXXX' : 'example@mail.com',
+            _authType == 'phone' ? Icons.phone : Icons.email,
+          ),
+          keyboardType: _authType == 'phone' ? TextInputType.phone : TextInputType.emailAddress,
         ),
         if (_otpSent) ...[
           const SizedBox(height: 16),
@@ -320,6 +348,30 @@ class _GoLivePageState extends State<GoLivePage> {
           color: AppColors.brandGreen,
         ),
       ],
+    );
+  }
+
+  Widget _authTypeButton(String type, IconData icon, String label) {
+    bool isSelected = _authType == type;
+    return Expanded(
+      child: InkWell(
+        onTap: () => setState(() => _authType = type),
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 12),
+          decoration: BoxDecoration(
+            color: isSelected ? AppColors.cyan.withOpacity(0.1) : Colors.transparent,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: isSelected ? AppColors.cyan : Colors.white.withOpacity(0.1)),
+          ),
+          child: Column(
+            children: [
+              Icon(icon, color: isSelected ? AppColors.cyan : AppColors.textMuted),
+              const SizedBox(height: 4),
+              Text(label, style: TextStyle(color: isSelected ? Colors.white : AppColors.textMuted, fontSize: 12)),
+            ],
+          ),
+        ),
+      ),
     );
   }
 
