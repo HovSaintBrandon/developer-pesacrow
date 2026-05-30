@@ -72,6 +72,11 @@ You must register as a Platform Partner to obtain your credentials:
 1.  **API Key (`apiKey`)**: Passed via the `x-api-key` header for all requests. Prefix: `pk_`.
 2.  **API Secret (`apiSecret`)**: Used strictly to verify incoming webhooks. Prefix: `sk_`. Never expose this in frontend code.
 
+## 🌐 API Base URLs
+Depending on your environment, route all requests to the correct base URL:
+*   **Sandbox Base URL**: `https://sbx.pesacrow.top` (Safe for testing, no real money).
+*   **Production Base URL**: `https://api.pesacrow.top` (Live environment).
+
 ## 🔑 Your Sandbox Credentials
 Use these for all server-to-server calls (Shopify, WooCommerce, etc.) in your development environment:
 
@@ -532,16 +537,37 @@ If building in **Flutter** or **React Native**, the JS SDK cannot be used.
     'Postman Collection': '''
 # Postman Collection
 
-Accelerate your integration by importing our official Postman collection. It contains pre-configured requests for all Open Integration and Decentralized API endpoints.
+Accelerate your integration by importing our official Postman collections. They contain pre-configured requests for all Open Integration and Decentralized API endpoints.
 
-### Download
-[Download] **[PesaCrow Open Integration Postman Collection](https://github.com/user-attachments/files/27161248/PesaCrow_Open_Integration_Collection.json)**
+### Downloads
+*   [Production Collection] **[PesaCrow Open Integration Postman Collection](https://github.com/user-attachments/files/27161248/PesaCrow_Open_Integration_Collection.json)**
+*   [Sandbox Collection] **[Pesacrow Sandbox APIs Postman Collection](https://github.com/HovSaintBrandon/developer-pesacrow/releases/download/sbx/Pesacrow.Sandbox.APIs.postman_collection.json)**
 
 ### How to use:
-1.  Download the `.json` file from the link above.
+1.  Download the `.json` file from the links above.
 2.  Open Postman and click **Import**.
 3.  Drag and drop the downloaded file.
 4.  Configure your **Environment Variables** (e.g., `apiKey`, `baseUrl`) to match your sandbox or production credentials.
+''',
+    'Sandbox Simulators': '''
+# Sandbox Simulators & Testing
+
+The Pesacrow Sandbox (`https://sbx.pesacrow.top`) allows you to test the complete escrow lifecycle safely without triggering real money movement. It includes specialized simulator endpoints to mock buyer actions and M-Pesa callbacks.
+
+### 1. Deal Creation (Sandbox)
+*   **P2P Deals:** `POST /api/sandbox/deals/create` (Decentralized marketplace creation without real SMS/OTP checks).
+*   **Platform Deals:** `POST /api/sandbox/open/deals` (Centralized creation requiring your `x-api-key`).
+
+### 2. Mock Payments & STK Push
+Instead of calling the real Safaricom Daraja API, you can mock the payment flow:
+*   **Initiate Mock STK:** `POST /api/sandbox/payments/initiate-stk` (Generates a mock `CheckoutRequestID`).
+*   **Simulate Callback:** `POST /api/sandbox/simulate/payment` (Pass `status: "success"` to mock a successful STK callback and transition the deal to `held`).
+
+### 3. Advanced Lifecycle Actions
+These sandbox endpoints allow you to safely mock the advanced lifecycle transitions without triggering real M-Pesa disbursements:
+*   **Deliver:** `POST /api/sandbox/deals/:transactionId/deliver` (Transitions a held deal to delivered).
+*   **Approve (Mock Release):** `POST /api/sandbox/deals/:transactionId/approve` (Mocks buyer approval and fakes a successful B2C payout to the seller).
+*   **Cancel & Refund:** `POST /api/sandbox/deals/:transactionId/cancel` and `/refund` (Handles both unpaid cancellations and mock-reversals for paid deals).
 ''',
   },
   'API Reference': {
