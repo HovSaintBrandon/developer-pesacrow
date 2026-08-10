@@ -2,10 +2,13 @@
     "name": "PesaCrow Developer Portal",
     "short_name": "PesaCrow Devs",
     "start_url": ".",
+    "scope": "/",
+    "lang": "en",
     "display": "standalone",
     "background_color": "#0D1117",
     "theme_color": "#00E5FF",
     "description": "Integration guides and API references for PesaCrow Escrow.",
+    "categories": ["developer", "finance", "business"],
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

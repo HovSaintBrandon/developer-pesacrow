@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <!--
     If you are serving your web app in a path other than the root, change the
@@ -18,7 +18,37 @@
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="PesaCrow Developer Portal - Integration guides, API references, and system status.">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#00E5FF">
+  <meta name="color-scheme" content="dark">
+
+  <!-- Primary SEO -->
+  <meta name="description" content="PesaCrow Developer Portal - Integration guides, REST API reference, webhooks, SDKs, and real-time system status for the PesaCrow M-Pesa escrow platform.">
+  <meta name="keywords" content="escrow api, m-pesa integration, m-pesa escrow, developer documentation, pesacrow api, payment api kenya, escrow payments">
+  <meta name="author" content="PesaCrow">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://escrow.pesacrow.top/">
+
+  <!-- Open Graph / Facebook / LinkedIn / WhatsApp -->
+  <!-- Note: these tags are static on purpose. Most social-share crawlers do not
+       execute JavaScript, so tags injected at runtime (see SeoService) never
+       reach them; the static defaults below are what actually renders in link
+       previews for the root URL. -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="PesaCrow Developer Portal">
+  <meta property="og:title" content="PesaCrow Developer Portal | Escrow API for M-Pesa">
+  <meta property="og:description" content="Integration guides, REST API reference, webhooks, SDKs, and real-time system status for the PesaCrow M-Pesa escrow platform.">
+  <meta property="og:image" content="https://escrow.pesacrow.top/favicon.png">
+  <meta property="og:image:width" content="677">
+  <meta property="og:image:height" content="369">
+  <meta property="og:url" content="https://escrow.pesacrow.top/">
+  <meta property="og:locale" content="en_US">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="PesaCrow Developer Portal | Escrow API for M-Pesa">
+  <meta name="twitter:description" content="Integration guides, REST API reference, webhooks, SDKs, and real-time system status for the PesaCrow M-Pesa escrow platform.">
+  <meta name="twitter:image" content="https://escrow.pesacrow.top/favicon.png">
 
   <!-- iOS meta tags & icons -->
   <meta name="mobile-web-app-capable" content="yes">
@@ -30,8 +60,51 @@
   <link rel="icon" type="image/png" href="favicon.png?v=2"/>
   <link rel="shortcut icon" type="image/png" href="favicon.png?v=2"/>
 
-  <title>PesaCrow Developer Portal</title>
+  <!-- Performance: the app calls out to the API host on load (system status, fees) -->
+  <link rel="preconnect" href="https://api.escrow.pesacrow.top">
+  <link rel="dns-prefetch" href="https://api.escrow.pesacrow.top">
+
+  <title>PesaCrow Developer Portal | Escrow API for M-Pesa</title>
   <link rel="manifest" href="manifest.json">
+
+  <!-- Structured data: Organization + WebSite -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "name": "PesaCrow",
+        "url": "https://escrow.pesacrow.top/",
+        "logo": "https://escrow.pesacrow.top/favicon.png",
+        "description": "PesaCrow is a digital escrow platform that secures M-Pesa payments between buyers and sellers.",
+        "email": "support@pesacrow.top"
+      },
+      {
+        "@type": "WebSite",
+        "name": "PesaCrow Developer Portal",
+        "url": "https://escrow.pesacrow.top/",
+        "description": "Integration guides, REST API reference, webhooks, SDKs, and real-time system status for the PesaCrow M-Pesa escrow platform.",
+        "publisher": {
+          "@type": "Organization",
+          "name": "PesaCrow"
+        }
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "PesaCrow Escrow API",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Web",
+        "url": "https://escrow.pesacrow.top/",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "KES"
+        }
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
   <!--
